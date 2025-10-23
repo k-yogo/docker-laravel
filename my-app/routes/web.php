@@ -7,7 +7,7 @@ use App\Http\Controllers\PostController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -22,5 +22,10 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::get('/test', [TestController::class, 'test'])->name('test');
-Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
+Route::get('post/create', [PostController::class, 'create'])->name('post.create');
 Route::post('post', [PostController::class, 'store'])->name('post.store');
+Route::get('post', [PostController::class, 'index'])->middleware('admin')->name('post.index');
+Route::get('post/show/{post}', [PostController::class, 'show'])->name('post.show');
+Route::get('post/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
+Route::patch('post/{post}', [PostController::class, 'update'])->name('post.update');
+Route::delete('post/{post}', [PostController::class, 'destroy'])->name('post.destroy');
